@@ -1,0 +1,93 @@
+/* General styling for form */
+.register-form {
+    max-width: 340px;
+    margin: 100px auto;
+    text-align: center;
+    
+    background-color: #f9f9f9;
+    padding: 30px 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.register-form:hover {
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Form heading styling */
+.register-form h2 {
+    margin-bottom: 25px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #2c3e50;
+    letter-spacing: 1px;
+}
+
+/* Input fields */
+.register-form input {
+    width: 80%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #bdc3c7;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #34495e;
+    background-color: #ecf0f1;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+/* Input focus effect */
+.register-form input:focus {
+    border-color: #2980b9;
+    background-color: #ffffff;
+}
+
+/* Button styling */
+.register-form button {
+    width: 80%;
+    padding: 12px;
+    background-color: #2980b9;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Button hover and active effects */
+.register-form button:hover {
+    background-color: #1c5d8d;
+    transform: translateY(-2px);
+}
+
+.register-form button:active {
+    background-color: #1c5d8d;
+    transform: translateY(1px);
+}
+
+/* Adding smooth transitions */
+.register-form input,
+.register-form button {
+    transition: all 0.3s ease;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    .register-form {
+        padding: 20px 15px;
+    }
+    
+    .register-form h2 {
+        font-size: 22px;
+    }
+
+    .register-form button,
+    .register-form input {
+        font-size: 14px;
+    }
+}
