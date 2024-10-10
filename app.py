@@ -12,7 +12,7 @@ CORS(
     app,
     resources={r"/*": {"origins": "http://localhost:3000"}},
     supports_credentials=True,
-    intercept_exceptions=False
+    intercept_exceptions=True
 )
 
 # Load config from config.py
@@ -30,8 +30,10 @@ jwt = JWTManager(app)
 # Import and register blueprints
 from routes.auth import auth_bp
 from routes.admin import admin_bp
+from routes.products import products_bp  # Import the products blueprint
 app.register_blueprint(auth_bp)
 app.register_blueprint(admin_bp)
+app.register_blueprint(products_bp)      # Register the products blueprint
 
 # Start the Flask application
 if __name__ == '__main__':
