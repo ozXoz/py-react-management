@@ -1,0 +1,75 @@
+Categories and Products:
+
+    Seasoning:
+        Salt
+        Black Pepper
+        Paprika
+        Cayenne Paprika
+        Oregano
+        Rosemary
+        Curry
+        Chili Peppers
+        Cumin
+        Garlic Powder
+        Onion Powder
+
+    Vegetables:
+        White Cabbage
+        Red Cabbage
+        Parsley
+        Onions
+        Banana Hot Peppers
+        Pickles
+        Turnip
+        Corn
+        Garlic
+        Lentils
+        Lettuce
+        Cucumber
+        Tomato
+
+    Beverages:
+        All Pepsi products (Pepsi, Diet Pepsi, Pepsi Max, etc.)
+        All Coca-Cola products (Coke, Diet Coke, Coke Zero, etc.)
+        All Juice brands (Orange juice, Apple juice, Mixed fruit juice, etc.)
+        Ayran
+
+    To-Go Box:
+        Small food box
+        Medium food box
+        Large food box
+        Small soup box
+        Large soup box
+        Cutlery (forks, knives, spoons)
+        Napkins
+
+    Kitchen Stuff:
+        Towels
+        Bleach
+        Brown Pepper
+        Knives
+
+    Sauce:
+        Ketchup
+        Hot Sauce
+        Tzatziki Sauce
+        Garlic Sauce
+        BBQ Sauce
+
+    Oil:
+        Olive Oil
+        Vegetable Oil
+        Canola Oil
+
+    Washroom Supplies:
+        Hand Soap
+        Toilet Paper
+        Mopping supplies
+        Aid Kits (First Aid supplies)
+
+    Dairy:
+        Milk
+        Custard
+
+    Desserts:
+        Milk Custard (as listed)

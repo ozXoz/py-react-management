@@ -1,15 +1,227 @@
-/* AdminPage.css */
-.admin-page {
+/* Admin Dashboard Layout */
+.admin-dashboard {
+    display: flex;
+    height: 100vh;
+    background-color: #f0f2f5;
+    font-family: 'Arial', sans-serif; /* Clean font for the dashboard */
+}
+
+/* Sidebar */
+.sidebar {
+    width: 150px;
+    background-color: #2c3e50; /* Darker shade for sidebar */
+    color: #ecf0f1; /* Light text for contrast */
+    padding: 30px 20px; /* Adjusted padding for a cleaner layout */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3); /* Deeper shadow for depth */
+    position: fixed; /* Fixed sidebar */
+    height: 100%; /* Full height */
+    overflow-y: auto; /* Scroll if content overflows */
+}
+
+/* Sidebar Title */
+.sidebar h2 {
+    font-size: 26px;
+    font-weight: bold;
+    color: #ecf0f1;
+    text-align: center; /* Center the title */
+    margin-bottom: 20px; /* Space below the title */
+}
+
+/* Sidebar Menu */
+.sidebar-menu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0; /* Remove default margin */
+}
+
+.sidebar-menu li {
+    margin: 15px 0;
+}
+
+.sidebar-menu li a {
+    color: #ecf0f1; /* Lighter color for links */
+    text-decoration: none;
+    padding: 10px 15px; /* Add padding for links */
+    border-radius: 4px; /* Rounded corners */
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+}
+
+/* Sidebar Menu Item Hover Effect */
+.sidebar-menu li a:hover {
+    background-color: #3498db; /* Highlight background on hover */
+    color: white; /* Change text color on hover */
+}
+
+/* Sidebar Icons */
+.sidebar-menu li a i {
+    margin-right: 10px; /* Space between icon and text */
+}
+
+/* Categories Section */
+.categories-section {
+    margin-top: 30px; /* Space between menu and categories */
+}
+
+.categories-section h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ecf0f1;
+    border-bottom: 1px solid #3498db; /* Underline for category header */
+    padding-bottom: 10px; /* Spacing below the header */
+}
+
+.categories-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.categories-list li {
+    margin: 10px 0;
+}
+
+.categories-list li a {
+    color: #ecf0f1; 
+    text-decoration: none;
+    padding: 5px; /* Add padding for links */
+    border-radius: 4px; /* Round edges */
+    transition: background-color 0.3s; /* Smooth background change */
+}
+
+.categories-list li a:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Light background on hover */
+}
+
+/* Main Content */
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 250px; /* Adjust for fixed sidebar */
+    background-color: #ecf0f1; /* Light background for main content */
+    overflow-y: auto; /* Scroll if content overflows */
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 28px;
+    color: #34495e; /* Darker color for header */
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+}
+
+.header-actions input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    width: 300px; /* Set a width for search input */
+    transition: border-color 0.3s; /* Smooth border change */
+}
+
+.header-actions input:focus {
+    border-color: #3498db; /* Change border color on focus */
+}
+
+/* Add New Button */
+.header-actions .add-new {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.header-actions .add-new:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+}
+
+/* Products Grid */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.product-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); /* Softer shadow for cards */
+    padding: 15px;
     text-align: center;
-    margin-top: 50px;
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth transformations */
 }
 
-.admin-page h1 {
-    font-size: 2.5rem;
-    color: #333;
+.product-card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
 }
 
-.admin-page p {
-    font-size: 1.2rem;
-    color: #666;
+.product-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px; /* Round image corners */
+}
+
+.product-details {
+    margin-top: 10px;
+}
+
+.product-details h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #34495e; /* Darker color for product title */
+}
+
+.product-details p {
+    margin-bottom: 5px;
+    color: #7f8c8d; /* Lighter color for product details */
+}
+
+.update-button {
+    padding: 8px 15px;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.update-button:hover {
+    background-color: #27ae60; /* Darker green on hover */
+}
+
+
+/* src/css/AdminPage.css */
+
+.users-container {
+    margin-top: 20px;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user-table th, .user-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.user-table th {
+    background-color: #f2f2f2;
+    text-align: left;
 }

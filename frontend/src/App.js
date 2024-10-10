@@ -7,6 +7,9 @@ import UserPage from './components/UserPage';
 import AdminPage from './components/AdminPage';
 import Register from './components/Register';
 import './css/App.css'; // Import the global CSS
+import Users from './components/Users';  // Import the Users component
+import Categories from './components/Categories';  // Import the Categories component
+
 
 
 const App = () => {
@@ -18,6 +21,8 @@ const App = () => {
                 <Route path="/user" element={<UserPage />} />
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/admin/users" element={<Users />} />  {/* Add a route for Users component */}
+                <Route path="/categories" element={<Categories />} />  {/* Categories Route */}
 
 
                 {/* Add more routes as needed */}
