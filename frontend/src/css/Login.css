@@ -74,6 +74,12 @@ nav ul li a {
     width: 100%;
     max-width: 400px;
     margin: auto;
+
+
+    background-image: url('https://i.ibb.co/tzhjHsC/wave-haikei.png'); /* Adding background image */
+    background-size: cover; /* Ensures the background covers the entire area */
+    background-position: center; /* Centers the background image */
+
     background-color: rgba(255, 255, 255, 0.15);
     border-radius: 15px;
     backdrop-filter: blur(10px);
@@ -124,6 +130,8 @@ nav ul li a {
     padding: 12px 20px;
     border: 1px solid #fff;
     border-radius: 25px;
+
+    
     background-color: rgba(255, 255, 255, 0.2);
     color: #fff;
     font-size: 1rem;
@@ -143,7 +151,10 @@ nav ul li a {
     border: none;
     border-radius: 25px;
     background-color: #28a745;
-    color: white;
+
+    background-size: cover; /* Ensures the background covers the entire area */
+    background-position: center; /* Centers the background image */
+    color: rgb(143, 16, 16);
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;

@@ -1,10 +1,11 @@
+# routes/auth.py
+
 from flask import Blueprint, request, jsonify, current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from flask_cors import cross_origin
 import logging
 from datetime import datetime
-
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
@@ -38,6 +39,11 @@ def register():
             'email': data['email'],
             'password': hashed_password,
             'role': user_role,
+            'permissions': {
+                'add_product': True,
+                'update_product': True,
+                'delete_product': True
+            },
             'registration_time': datetime.utcnow(),  # Save registration time (UTC)
             'last_seen': datetime.utcnow(),          # Initial last seen time set at registration
             'online_duration': 0                     # Initial duration is 0
@@ -47,7 +53,6 @@ def register():
     except Exception as e:
         logging.error(f'Error registering user: {e}')
         return jsonify({'message': f'Error registering user: {str(e)}'}), 500
-
 
 @auth_bp.route('/login', methods=['POST', 'OPTIONS'])
 def login():
@@ -83,7 +88,6 @@ def login():
     else:
         logging.warning(f"Login attempt failed for email: {data['email']}")
         return jsonify({'message': 'Invalid credentials'}), 401
-
 
 @auth_bp.route('/logout', methods=['POST'])
 @jwt_required()

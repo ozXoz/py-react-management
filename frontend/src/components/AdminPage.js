@@ -1,12 +1,23 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Users from './Users';         // Import the Users component
+import Users from './Users';            // Import the Users component
 import Categories from './Categories';  // Import the Categories component
+import Products from './Products';      // Import the Products component
+import Permissions from './Permissions'; // Import the Permissions component
 import '../css/AdminPage.css';
-import Products from './Products';     // Import the Products component
 
 const AdminPage = () => {
     const [view, setView] = useState('dashboard');
+    const [users, setUsers] = useState([
+        { id: 1, name: 'User1', permissions: { add: true, delete: true, update: true } },
+        { id: 2, name: 'User2', permissions: { add: false, delete: false, update: false } },
+        // ...other users
+    ]);
+
+    // Function to update user permissions
+    const updateUserPermissions = (userId, newPermissions) => {
+        setUsers(users.map(user => user.id === userId ? { ...user, permissions: newPermissions } : user));
+    };
 
     return (
         <div className="admin-dashboard">
@@ -16,8 +27,10 @@ const AdminPage = () => {
                 <ul className="sidebar-menu">
                     <li onClick={() => setView('dashboard')}><Link to="#">Dashboard</Link></li>
                     <li onClick={() => setView('ecommerce')}><Link to="#">Ecommerce</Link></li>
-                    <li onClick={() => setView('products')}><Link to="#">Products</Link></li>                    <li onClick={() => setView('users')}><Link to="#">Users</Link></li>
+                    <li onClick={() => setView('products')}><Link to="#">Products</Link></li>
+                    <li onClick={() => setView('users')}><Link to="#">Users</Link></li>
                     <li onClick={() => setView('categories')}><Link to="#">Categories</Link></li>
+                    <li onClick={() => setView('permissions')}><Link to="#">Permissions</Link></li>
                 </ul>
             </div>
 
@@ -30,9 +43,12 @@ const AdminPage = () => {
                 {/* Conditionally render the content based on the view */}
                 {view === 'dashboard' && <p>Welcome to the admin dashboard!</p>}
                 {view === 'ecommerce' && <p>Ecommerce section</p>}
-                {view === 'products' && <Products />}       {/* Display the Products component */}
-                {view === 'users' && <Users />}           {/* Display the Users component */}
-                {view === 'categories' && <Categories />}  {/* Display the Categories component */}
+                {view === 'products' && <Products users={users} />}
+                {view === 'users' && <Users />}
+                {view === 'categories' && <Categories />}
+                {view === 'permissions' && (
+                    <Permissions users={users} updateUserPermissions={updateUserPermissions} />
+                )}
             </div>
         </div>
     );

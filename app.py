@@ -30,10 +30,12 @@ jwt = JWTManager(app)
 # Import and register blueprints
 from routes.auth import auth_bp
 from routes.admin import admin_bp
+from routes.user_products import user_products_bp
 from routes.products import products_bp  # Import the products blueprint
 app.register_blueprint(auth_bp)
 app.register_blueprint(admin_bp)
 app.register_blueprint(products_bp)      # Register the products blueprint
+app.register_blueprint(user_products_bp)
 
 # Start the Flask application
 if __name__ == '__main__':
