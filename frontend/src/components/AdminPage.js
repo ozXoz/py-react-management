@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';  // Import Routes and Route
 import Users from './Users';            // Import the Users component
 import Categories from './Categories';  // Import the Categories component
 import Products from './Products';      // Import the Products component
 import Permissions from './Permissions'; // Import the Permissions component
 import '../css/AdminPage.css';
+import AdminReports from './AdminReports';
+import ReportDetails from './ReportDetails';
 
 const AdminPage = () => {
     const [view, setView] = useState('dashboard');
@@ -31,6 +33,7 @@ const AdminPage = () => {
                     <li onClick={() => setView('users')}><Link to="#">Users</Link></li>
                     <li onClick={() => setView('categories')}><Link to="#">Categories</Link></li>
                     <li onClick={() => setView('permissions')}><Link to="#">Permissions</Link></li>
+                    <li onClick={() => setView('reports')}><Link to="#">Reports</Link></li>
                 </ul>
             </div>
 
@@ -49,6 +52,12 @@ const AdminPage = () => {
                 {view === 'permissions' && (
                     <Permissions users={users} updateUserPermissions={updateUserPermissions} />
                 )}
+                {view === 'reports' && <AdminReports />}
+
+                {/* Routes setup */}
+                <Routes>
+                <Route path="report/:id" element={<ReportDetails />} />       
+                         </Routes>
             </div>
         </div>
     );

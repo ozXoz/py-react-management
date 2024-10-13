@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../css/UserPage.css'; // Import the CSS file for styling
+import ReportForm from './ReportForm';
+import UserReports from './UserReports';
 
 const UserPage = () => {
     const [view, setView] = useState('dashboard');
@@ -283,6 +285,8 @@ const UserPage = () => {
                     <li onClick={() => setView('dashboard')}>Dashboard</li>
                     <li onClick={() => setView('categories')}>Categories</li>
                     <li onClick={() => setView('products')}>Products</li>
+                    <li onClick={() => setView('reportForm')}>Report Issue</li>
+                    <li onClick={() => setView('userReports')}>Your Reports</li>
                 </ul>
             </div>
 
@@ -312,6 +316,8 @@ const UserPage = () => {
                 {view === 'products' && renderProducts()}
 
                 {view === 'addProduct' && renderAddProductForm()}
+                {view === 'reportForm' && <ReportForm />}
+                {view === 'userReports' && <UserReports />}
             </div>
         </div>
     );

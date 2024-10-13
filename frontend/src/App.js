@@ -9,6 +9,7 @@ import Register from './components/Register';
 import './css/App.css'; // Import the global CSS
 import Users from './components/Users';  // Import the Users component
 import Categories from './components/Categories';  // Import the Categories component
+import ReportDetails from './components/ReportDetails';  // Import ReportDetails component
 
 
 
@@ -23,6 +24,7 @@ const App = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/admin/users" element={<Users />} />  {/* Add a route for Users component */}
                 <Route path="/categories" element={<Categories />} />  {/* Categories Route */}
+                <Route path="/admin/report/:id" element={<ReportDetails />} />
 
 
                 {/* Add more routes as needed */}
