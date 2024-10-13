@@ -5,6 +5,7 @@ import axios from 'axios';
 import '../css/UserPage.css'; // Import the CSS file for styling
 import ReportForm from './ReportForm';
 import UserReports from './UserReports';
+import LiveChatUser from './LiveChatUser'; // Uncomment this when implementing LiveChat
 
 const UserPage = () => {
     const [view, setView] = useState('dashboard');
@@ -13,9 +14,11 @@ const UserPage = () => {
     const [productName, setProductName] = useState('');
     const [productDescription, setProductDescription] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
-    const [attributesList, setAttributesList] = useState([]); // Updated to an array
+    const [attributesList, setAttributesList] = useState([]);
     const [message, setMessage] = useState('');
     const [selectedProduct, setSelectedProduct] = useState(null);
+    const [imageFile, setImageFile] = useState(null);
+    const [imageUrl, setImageUrl] = useState('');
 
     // Fetch categories and user's products from the backend
     useEffect(() => {
@@ -47,25 +50,31 @@ const UserPage = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
-            const productData = {
-                name: productName,
-                description: productDescription,
-                category: selectedCategory,
-                attributes: attributesList.reduce((acc, attr) => {
-                    acc[attr.name] = attr.value;
-                    return acc;
-                }, {}),
-            };
+            const formData = new FormData();
+            formData.append('name', productName);
+            formData.append('description', productDescription);
+            formData.append('category', selectedCategory);
+            const attributes = attributesList.reduce((acc, attr) => {
+                acc[attr.name] = attr.value;
+                return acc;
+            }, {});
+            formData.append('attributes', JSON.stringify(attributes));
+
+            if (imageFile) {
+                formData.append('image_file', imageFile);
+            } else if (imageUrl) {
+                formData.append('image_url', imageUrl);
+            }
 
             if (selectedProduct) {
                 // Update existing product
                 await axios.put(
                     `http://localhost:5000/user/products/${selectedProduct.id}`,
-                    productData,
+                    formData,
                     {
                         headers: {
-                            'Content-Type': 'application/json',
                             'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'multipart/form-data',
                         },
                     }
                 );
@@ -74,11 +83,11 @@ const UserPage = () => {
                 // Add new product
                 await axios.post(
                     'http://localhost:5000/user/products',
-                    productData,
+                    formData,
                     {
                         headers: {
-                            'Content-Type': 'application/json',
                             'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'multipart/form-data',
                         },
                     }
                 );
@@ -127,6 +136,8 @@ const UserPage = () => {
         setSelectedCategory(product.category);
         const attributesArray = Object.entries(product.attributes || {}).map(([name, value]) => ({ name, value }));
         setAttributesList(attributesArray);
+        setImageFile(null);
+        setImageUrl('');
         setView('addProduct');
     };
 
@@ -137,6 +148,8 @@ const UserPage = () => {
         setProductDescription('');
         setSelectedCategory('');
         setAttributesList([]);
+        setImageFile(null);
+        setImageUrl('');
         setMessage('');
         setView('products');
     };
@@ -173,6 +186,7 @@ const UserPage = () => {
                         <th>Category</th>
                         <th>Description</th>
                         <th>Attributes</th>
+                        <th>Image</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -189,6 +203,11 @@ const UserPage = () => {
                                             <strong>{key}:</strong> {value}
                                         </div>
                                     ))}
+                            </td>
+                            <td>
+                                {product.image && (
+                                    <img src={product.image} alt={product.name} width="100" />
+                                )}
                             </td>
                             <td>
                                 <button className="edit-btn" onClick={() => handleEdit(product)}>
@@ -210,7 +229,7 @@ const UserPage = () => {
         <div className="add-product-section">
             <h2>{selectedProduct ? 'Update Product' : 'Add a New Product'}</h2>
             {message && <p className="message">{message}</p>}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
                 <div>
                     <label>Product Name:</label><br />
                     <input
@@ -270,6 +289,22 @@ const UserPage = () => {
                         Add Attribute
                     </button>
                 </div>
+                {/* Image Upload */}
+                <div>
+                    <label>Product Image:</label><br />
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setImageFile(e.target.files[0])}
+                    />
+                    <p>Or</p>
+                    <input
+                        type="text"
+                        placeholder="Image URL"
+                        value={imageUrl}
+                        onChange={(e) => setImageUrl(e.target.value)}
+                    />
+                </div>
                 <button type="submit">{selectedProduct ? 'Update Product' : 'Add Product'}</button>
                 <button type="button" onClick={resetForm}>Cancel</button>
             </form>
@@ -287,6 +322,7 @@ const UserPage = () => {
                     <li onClick={() => setView('products')}>Products</li>
                     <li onClick={() => setView('reportForm')}>Report Issue</li>
                     <li onClick={() => setView('userReports')}>Your Reports</li>
+                    <li onClick={() => setView('support')}>Support</li> {/* New Support Menu Item */}
                 </ul>
             </div>
 
@@ -316,8 +352,16 @@ const UserPage = () => {
                 {view === 'products' && renderProducts()}
 
                 {view === 'addProduct' && renderAddProductForm()}
+
                 {view === 'reportForm' && <ReportForm />}
+
                 {view === 'userReports' && <UserReports />}
+                {view === 'support' && (
+                    <div className="support-section">
+                        <h2>Support</h2>
+                        <LiveChatUser /> {/* LiveChatUser component renders the chat area */}
+                    </div>
+                )}
             </div>
         </div>
     );

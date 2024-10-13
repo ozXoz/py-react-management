@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+// src/components/AdminReports.js
+
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ReportDetails from './ReportDetails';  // Import the ReportDetails component
+import '../css/AdminReports.css'; // Import the CSS file
 
 const AdminReports = () => {
     const [reports, setReports] = useState([]);
     const [selectedReportId, setSelectedReportId] = useState(null); // Track selected report
+    const [error, setError] = useState('');
 
     useEffect(() => {
         const fetchReports = async () => {
@@ -18,6 +22,7 @@ const AdminReports = () => {
                 setReports(response.data);
             } catch (error) {
                 console.error('Error fetching reports:', error);
+                setError('Failed to fetch reports.');
             }
         };
         fetchReports();
@@ -26,11 +31,12 @@ const AdminReports = () => {
     return (
         <div className="admin-reports">
             <h2>User Reports</h2>
+            {error && <p className="error-message">{error}</p>}
             {reports.length === 0 ? (
-                <p>No reports submitted.</p>
+                <p className="no-reports-message">No reports submitted.</p>
             ) : (
                 <>
-                    <table>
+                    <table className="reports-table">
                         <thead>
                             <tr>
                                 <th>User Email</th>
@@ -43,12 +49,15 @@ const AdminReports = () => {
                         <tbody>
                             {reports.map((report) => (
                                 <tr key={report.id}>
-                                    <td>{report.user_email}</td>
-                                    <td>{report.subject}</td>
-                                    <td>{report.status}</td>
-                                    <td>{new Date(report.created_at).toLocaleString()}</td>
-                                    <td>
-                                        <button onClick={() => setSelectedReportId(report.id)}>
+                                    <td data-label="User Email">{report.user_email}</td>
+                                    <td data-label="Subject">{report.subject}</td>
+                                    <td data-label="Status">{report.status}</td>
+                                    <td data-label="Submitted On">{new Date(report.created_at).toLocaleString()}</td>
+                                    <td data-label="Actions">
+                                        <button
+                                            className="view-button"
+                                            onClick={() => setSelectedReportId(report.id)}
+                                        >
                                             View
                                         </button>
                                     </td>
@@ -62,6 +71,12 @@ const AdminReports = () => {
                         <div className="report-details-section">
                             <h3>Report Details</h3>
                             <ReportDetails reportId={selectedReportId} />
+                            <button
+                                className="close-details-button"
+                                onClick={() => setSelectedReportId(null)}
+                            >
+                                Close
+                            </button>
                         </div>
                     )}
                 </>

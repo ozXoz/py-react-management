@@ -1,5 +1,8 @@
+// src/components/Categories.js
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../css/Categories.css'; // Import the CSS file
 
 const Categories = () => {
     const [categoryName, setCategoryName] = useState('');
@@ -60,10 +63,10 @@ const Categories = () => {
     return (
         <div className="category-section">
             <h2>Add New Category (Admin Only)</h2>
-            {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
-            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+            {successMessage && <p className="success-message">{successMessage}</p>}
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-            <form onSubmit={handleAddCategory}>
+            <form onSubmit={handleAddCategory} className="category-form">
                 <input
                     type="text"
                     placeholder="Category Name"
@@ -75,7 +78,7 @@ const Categories = () => {
             </form>
 
             <h3>Available Categories</h3>
-            <ul>
+            <ul className="category-list">
                 {categories.map((category, index) => (
                     <li key={index}>{category}</li>
                 ))}

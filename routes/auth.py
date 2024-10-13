@@ -74,7 +74,11 @@ def login():
 
     # Validate password and issue JWT token
     if user and check_password_hash(user['password'], data['password']):
-        access_token = create_access_token(identity={'email': user['email'], 'role': user['role']})
+        access_token = create_access_token(identity={
+        'id': str(user['_id']),
+        'email': user['email'],
+        'role': user['role']
+    })
         # Update last seen time
         mongo.db.users.update_one(
             {'email': user['email']},

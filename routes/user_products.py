@@ -2,9 +2,12 @@
 
 from flask import Blueprint, jsonify, request, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_uploads import UploadNotAllowed
 import logging
 from datetime import datetime
 from bson.objectid import ObjectId
+import os
+import json
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
@@ -35,19 +38,32 @@ def add_product():
             return jsonify({'message': 'Permission denied'}), 403
 
         # Get product data from the request
-        data = request.get_json()
-        name = data.get('name')
-        description = data.get('description')
-        category = data.get('category')
-        attributes = data.get('attributes', {})
+        name = request.form.get('name')
+        description = request.form.get('description')
+        category = request.form.get('category')
+        attributes = request.form.get('attributes', '{}')
+        image_url = request.form.get('image_url', '')
+        image_file = request.files.get('image_file', None)
 
         if not all([name, description, category]):
             return jsonify({'message': 'All fields are required'}), 400
+
+        # Process attributes
+        attributes = json.loads(attributes) if attributes else {}
 
         # Check if the category exists
         existing_category = mongo.db.categories.find_one({'name': category})
         if not existing_category:
             return jsonify({'message': 'Category does not exist'}), 400
+
+        # Handle image upload
+        image_path = ''
+        if image_file:
+            images = current_app.images
+            filename = images.save(image_file)
+            image_path = os.path.join('/uploads/images/', filename)
+        elif image_url:
+            image_path = image_url
 
         # Create product document
         product = {
@@ -55,6 +71,7 @@ def add_product():
             'description': description,
             'category': category,
             'attributes': attributes,
+            'image': image_path,
             'added_by': email,
             'created_at': datetime.utcnow(),
             'updated_at': datetime.utcnow()
@@ -66,6 +83,8 @@ def add_product():
 
         return jsonify({'message': 'Product added successfully', 'product_id': str(result.inserted_id)}), 201
 
+    except UploadNotAllowed:
+        return jsonify({'message': 'File type not allowed'}), 400
     except Exception as e:
         logging.error(f"Error adding product: {e}")
         return jsonify({'message': f"Server error: {str(e)}"}), 500
@@ -91,6 +110,7 @@ def get_user_products():
                 'description': product['description'],
                 'category': product['category'],
                 'attributes': product.get('attributes', {}),
+                'image': product.get('image', ''),
                 'created_at': product.get('created_at'),
                 'updated_at': product.get('updated_at')
             })
@@ -124,11 +144,15 @@ def update_user_product(product_id):
             return jsonify({'message': 'Product not found or access denied'}), 404
 
         # Get update data
-        data = request.get_json()
-        name = data.get('name')
-        description = data.get('description')
-        category = data.get('category')
-        attributes = data.get('attributes', {})
+        name = request.form.get('name')
+        description = request.form.get('description')
+        category = request.form.get('category')
+        attributes = request.form.get('attributes', '{}')
+        image_url = request.form.get('image_url', '')
+        image_file = request.files.get('image_file', None)
+
+        # Process attributes
+        attributes = json.loads(attributes) if attributes else {}
 
         # Prepare update fields
         update_fields = {'updated_at': datetime.utcnow()}
@@ -137,13 +161,21 @@ def update_user_product(product_id):
         if description:
             update_fields['description'] = description
         if category:
-            # Check if the category exists
             existing_category = mongo.db.categories.find_one({'name': category})
             if not existing_category:
                 return jsonify({'message': 'Category does not exist'}), 400
             update_fields['category'] = category
-        if attributes is not None:
+        if attributes:
             update_fields['attributes'] = attributes
+
+        # Handle image upload
+        if image_file:
+            images = current_app.images
+            filename = images.save(image_file)
+            image_path = os.path.join('/uploads/images/', filename)
+            update_fields['image'] = image_path
+        elif image_url:
+            update_fields['image'] = image_url
 
         # Update the product
         result = mongo.db.products.update_one(
@@ -154,6 +186,8 @@ def update_user_product(product_id):
         logging.info(f"Product {product_id} updated by {email}")
         return jsonify({'message': 'Product updated successfully'}), 200
 
+    except UploadNotAllowed:
+        return jsonify({'message': 'File type not allowed'}), 400
     except Exception as e:
         logging.error(f"Error updating product: {e}")
         return jsonify({'message': f"Server error: {str(e)}"}), 500

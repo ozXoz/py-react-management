@@ -1,5 +1,8 @@
+// src/components/Products.js
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../css/Products.css';
 
 const Products = () => {
     const [products, setProducts] = useState([]);
@@ -15,11 +18,15 @@ const Products = () => {
     });
     const [newAttributeName, setNewAttributeName] = useState('');
     const [newAttributeValue, setNewAttributeValue] = useState('');
+    const [newImageFile, setNewImageFile] = useState(null);
+    const [newImageUrl, setNewImageUrl] = useState('');
 
     // State for editing a product
-    const [editProduct, setEditProduct] = useState(null); // The product being edited
+    const [editProduct, setEditProduct] = useState(null);
     const [editAttributeName, setEditAttributeName] = useState('');
     const [editAttributeValue, setEditAttributeValue] = useState('');
+    const [editImageFile, setEditImageFile] = useState(null);
+    const [editImageUrl, setEditImageUrl] = useState('');
 
     // Fetch products and categories on component mount
     useEffect(() => {
@@ -53,19 +60,34 @@ const Products = () => {
 
         try {
             const token = localStorage.getItem('token');
+            const formData = new FormData();
+            formData.append('name', newProduct.name);
+            formData.append('category', newProduct.category);
+            formData.append('attributes', JSON.stringify(newProduct.attributes));
+
+            if (newImageFile) {
+                formData.append('image_file', newImageFile);
+            } else if (newImageUrl) {
+                formData.append('image_url', newImageUrl);
+            }
+
             const response = await axios.post(
                 'http://localhost:5000/admin/products',
-                newProduct,
+                formData,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'multipart/form-data',
                     },
                 }
             );
 
             setSuccessMessage(response.data.message);
             setNewProduct({ name: '', category: '', attributes: {} });
+            setNewAttributeName('');
+            setNewAttributeValue('');
+            setNewImageFile(null);
+            setNewImageUrl('');
             fetchProducts(); // Refresh product list
         } catch (error) {
             if (error.response) {
@@ -99,6 +121,8 @@ const Products = () => {
         });
         setEditAttributeName('');
         setEditAttributeValue('');
+        setEditImageFile(null);
+        setEditImageUrl('');
         setError('');
         setSuccessMessage('');
     };
@@ -143,18 +167,25 @@ const Products = () => {
     const saveEditedProduct = async () => {
         try {
             const token = localStorage.getItem('token');
+            const formData = new FormData();
+            formData.append('name', editProduct.name);
+            formData.append('category', editProduct.category);
+            formData.append('attributes', JSON.stringify(editProduct.attributes));
+            formData.append('remove_attributes', JSON.stringify(editProduct.removeAttributes));
+
+            if (editImageFile) {
+                formData.append('image_file', editImageFile);
+            } else if (editImageUrl) {
+                formData.append('image_url', editImageUrl);
+            }
+
             await axios.put(
                 `http://localhost:5000/admin/products/${editProduct.id}`,
-                {
-                    name: editProduct.name,
-                    category: editProduct.category,
-                    attributes: editProduct.attributes,
-                    remove_attributes: editProduct.removeAttributes,
-                },
+                formData,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'multipart/form-data',
                     },
                 }
             );
@@ -248,6 +279,23 @@ const Products = () => {
                     </button>
                 </div>
 
+                {/* Image Upload */}
+                <div>
+                    <h4>Product Image</h4>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setNewImageFile(e.target.files[0])}
+                    />
+                    <p>Or</p>
+                    <input
+                        type="text"
+                        placeholder="Image URL"
+                        value={newImageUrl}
+                        onChange={(e) => setNewImageUrl(e.target.value)}
+                    />
+                </div>
+
                 <button type="submit">Add Product</button>
             </form>
 
@@ -322,6 +370,29 @@ const Products = () => {
                         </div>
                     </div>
 
+                    {/* Image Upload */}
+                    <div>
+                        <h4>Product Image</h4>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => setEditImageFile(e.target.files[0])}
+                        />
+                        <p>Or</p>
+                        <input
+                            type="text"
+                            placeholder="Image URL"
+                            value={editImageUrl}
+                            onChange={(e) => setEditImageUrl(e.target.value)}
+                        />
+                        {editProduct.image && (
+                            <div>
+                                <p>Current Image:</p>
+                                <img src={editProduct.image} alt="Product" width="100" />
+                            </div>
+                        )}
+                    </div>
+
                     <button type="button" onClick={saveEditedProduct}>
                         Save Changes
                     </button>
@@ -339,6 +410,7 @@ const Products = () => {
                         <th>Name</th>
                         <th>Category</th>
                         <th>Attributes</th>
+                        <th>Image</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -354,6 +426,11 @@ const Products = () => {
                                             {key}: {value}
                                         </p>
                                     )
+                                )}
+                            </td>
+                            <td>
+                                {product.image && (
+                                    <img src={product.image} alt={product.name} width="100" />
                                 )}
                             </td>
                             <td>

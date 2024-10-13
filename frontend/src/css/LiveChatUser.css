@@ -1,0 +1,299 @@
+/* src/css/LiveChatUser.css */
+
+/* Floating Chat Button */
+.chat-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #0084ff; /* MSN Messenger Blue */
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat-button:hover {
+    background-color: #006bbd;
+    transform: scale(1.05);
+}
+
+.chat-button.open {
+    background-color: #ff5c5c; /* Red for close */
+}
+
+.chat-button.open:hover {
+    background-color: #ff1a1a;
+}
+
+/* Chat Modal */
+.chat-modal {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 350px;
+    max-height: 600px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Chat Header */
+.chat-header {
+    background-color: #0084ff; /* MSN Messenger Blue */
+    color: #fff;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+}
+
+.close-button:hover {
+    color: #ff5c5c; /* Red color on hover */
+}
+
+/* Chat Body */
+.chat-body {
+    flex: 1;
+    padding: 10px 15px;
+    background-color: #f2f2f2;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Issue Selection */
+.issue-selection {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.issue-selection h4 {
+    margin-bottom: 10px;
+    color: #0084ff;
+    font-size: 16px;
+}
+
+.issue-selection ul {
+    list-style: none;
+    padding: 0;
+}
+
+.issue-selection li {
+    background-color: #ffffff;
+    border: 2px solid #0084ff;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    text-align: center;
+    font-size: 14px;
+}
+
+.issue-selection li:hover {
+    background-color: #0084ff;
+    color: #ffffff;
+}
+
+/* Waiting Status */
+.waiting-status {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.waiting-status p {
+    font-size: 14px;
+    color: #555555;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.waiting-status button {
+    background-color: #0084ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+}
+
+.waiting-status button:hover {
+    background-color: #006bbd;
+}
+
+/* Status Message */
+.status-message {
+    text-align: center;
+    color: #ff5c5c; /* Red color for alerts */
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Messages Container */
+.messages-container {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* No Messages */
+.no-messages {
+    text-align: center;
+    color: #7f8c8d;
+    margin-top: 50px;
+    font-size: 14px;
+}
+
+/* Chat Messages */
+.chat-message {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: flex-end;
+    max-width: 80%;
+    position: relative;
+}
+
+.chat-message.user {
+    align-self: flex-end;
+}
+
+.chat-message.admin {
+    align-self: flex-start;
+}
+
+/* Avatar Styles */
+.chat-message .avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 0 10px;
+    object-fit: cover;
+}
+
+.chat-message.user .avatar {
+    order: 2;
+}
+
+.chat-message.admin .avatar {
+    order: 1;
+}
+
+/* Message Content */
+.message-content {
+    background-color: #0084ff; /* User message in blue */
+    color: #ffffff;
+    padding: 10px 15px;
+    border-radius: 15px 15px 0 15px;
+    font-size: 14px;
+    position: relative;
+}
+
+.chat-message.admin .message-content {
+    background-color: #e5f3ff; /* Admin message in light blue */
+    color: #000000;
+    border-radius: 15px 15px 15px 0;
+}
+
+/* Message Timestamp */
+.message-timestamp {
+    font-size: 12px;
+    color: #cccccc;
+    margin-top: 5px;
+    text-align: right;
+}
+
+/* Chat Input */
+.chat-input {
+    display: flex;
+    border-top: 1px solid #dddddd;
+}
+
+.chat-input input[type='text'] {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    font-size: 14px;
+    border-radius: 0 0 0 10px;
+}
+
+.chat-input input[type='text']:focus {
+    outline: none;
+}
+
+.chat-input button {
+    background-color: #0084ff;
+    color: #fff;
+    border: none;
+    padding: 0 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 0 0 10px 0;
+    font-size: 14px;
+}
+
+.chat-input button:hover {
+    background-color: #006bbd;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .chat-modal {
+        width: 90%;
+        right: 5%;
+        bottom: 80px;
+    }
+
+    .chat-button {
+        right: 10px;
+        bottom: 10px;
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+}

@@ -2,9 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../css/Permissions.css';
+
 
 const Permissions = () => {
     const [users, setUsers] = useState([]);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -53,7 +56,8 @@ const Permissions = () => {
     return (
         <div className="permissions">
             <h2>User Permissions</h2>
-            <table>
+            {error && <p className="error">{error}</p>}
+            <table className="permissions-table">
                 <thead>
                     <tr>
                         <th>User</th>
@@ -65,31 +69,43 @@ const Permissions = () => {
                 <tbody>
                     {users.map((user) => (
                         <tr key={user.id}>
-                            <td>{user.email}</td>
-                            <td>
+                            <td data-label="User">{user.email}</td>
+                            <td data-label="Add Product">
                                 <input
                                     type="checkbox"
                                     checked={user.permissions.add_product}
                                     onChange={(e) =>
-                                        handlePermissionChange(user.id, 'add_product', e.target.checked)
+                                        handlePermissionChange(
+                                            user.id,
+                                            'add_product',
+                                            e.target.checked
+                                        )
                                     }
                                 />
                             </td>
-                            <td>
+                            <td data-label="Update Product">
                                 <input
                                     type="checkbox"
                                     checked={user.permissions.update_product}
                                     onChange={(e) =>
-                                        handlePermissionChange(user.id, 'update_product', e.target.checked)
+                                        handlePermissionChange(
+                                            user.id,
+                                            'update_product',
+                                            e.target.checked
+                                        )
                                     }
                                 />
                             </td>
-                            <td>
+                            <td data-label="Delete Product">
                                 <input
                                     type="checkbox"
                                     checked={user.permissions.delete_product}
                                     onChange={(e) =>
-                                        handlePermissionChange(user.id, 'delete_product', e.target.checked)
+                                        handlePermissionChange(
+                                            user.id,
+                                            'delete_product',
+                                            e.target.checked
+                                        )
                                     }
                                 />
                             </td>

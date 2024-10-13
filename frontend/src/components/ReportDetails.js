@@ -1,6 +1,8 @@
 // src/components/ReportDetails.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import '../css/ReportDetails.css'; // Import the CSS file
+
 
 const ReportDetails = ({ reportId }) => {  // Accept reportId as a prop
     const [report, setReport] = useState(null);

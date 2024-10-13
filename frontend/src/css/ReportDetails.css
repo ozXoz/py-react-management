@@ -1,0 +1,38 @@
+/* src/css/ReportDetails.css */
+
+/* Container Styling */
+.report-details {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+}
+
+/* Paragraph Styling */
+.report-details p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+/* Strong Text Styling */
+.report-details strong {
+    color: #2c3e50;
+}
+
+/* Error and Loading Messages */
+.error-message {
+    color: #e74c3c;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+.loading-message {
+    color: #2980b9;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 20px;
+}

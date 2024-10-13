@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../css/Users.css'; // Import the CSS file
 
 const Users = () => {
     const [users, setUsers] = useState([]);

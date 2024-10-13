@@ -28,7 +28,6 @@ const AdminPage = () => {
                 <h2>ProdoCo</h2>
                 <ul className="sidebar-menu">
                     <li onClick={() => setView('dashboard')}><Link to="#">Dashboard</Link></li>
-                    <li onClick={() => setView('ecommerce')}><Link to="#">Ecommerce</Link></li>
                     <li onClick={() => setView('products')}><Link to="#">Products</Link></li>
                     <li onClick={() => setView('users')}><Link to="#">Users</Link></li>
                     <li onClick={() => setView('categories')}><Link to="#">Categories</Link></li>
@@ -45,7 +44,6 @@ const AdminPage = () => {
 
                 {/* Conditionally render the content based on the view */}
                 {view === 'dashboard' && <p>Welcome to the admin dashboard!</p>}
-                {view === 'ecommerce' && <p>Ecommerce section</p>}
                 {view === 'products' && <Products users={users} />}
                 {view === 'users' && <Users />}
                 {view === 'categories' && <Categories />}

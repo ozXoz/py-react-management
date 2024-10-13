@@ -1,0 +1,174 @@
+/* src/css/AdminReports.css */
+
+/* Container Styling */
+.admin-reports {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Headings */
+.admin-reports h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+    font-weight: 500;
+    font-size: 24px;
+}
+
+.admin-reports h3 {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    text-align: center;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+/* Error and Messages */
+.error-message {
+    color: #e74c3c;
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.no-reports-message {
+    text-align: center;
+    font-size: 18px;
+    color: #7f8c8d;
+}
+
+/* Table Styling */
+.reports-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 40px;
+}
+
+.reports-table thead {
+    background-color: #2c3e50;
+    color: #fff;
+}
+
+.reports-table th,
+.reports-table td {
+    padding: 15px;
+    border: 1px solid #ddd;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 16px;
+}
+
+.reports-table th {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+}
+
+.reports-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.reports-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Button Styling */
+.view-button,
+.close-details-button {
+    padding: 8px 16px;
+    background-color: #2980b9;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.view-button:hover,
+.close-details-button:hover {
+    background-color: #2471a3;
+}
+
+.close-details-button {
+    background-color: #e74c3c;
+}
+
+.close-details-button:hover {
+    background-color: #c0392b;
+}
+
+/* Report Details Section */
+.report-details-section {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .admin-reports {
+        padding: 15px;
+    }
+
+    .reports-table,
+    .reports-table thead,
+    .reports-table tbody,
+    .reports-table th,
+    .reports-table td,
+    .reports-table tr {
+        display: block;
+    }
+
+    .reports-table thead {
+        display: none;
+    }
+
+    .reports-table tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 10px;
+        background-color: #fff;
+    }
+
+    .reports-table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    .reports-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: calc(50% - 30px);
+        padding-right: 10px;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .reports-table td img {
+        max-width: 100%;
+        border-radius: 4px;
+    }
+
+    .report-details-section {
+        padding: 15px;
+    }
+
+    .view-button,
+    .close-details-button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
