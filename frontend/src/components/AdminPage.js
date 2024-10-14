@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';  // Import Routes and Route
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTachometerAlt, faBox, faUsers, faTags, faKey, faFileAlt, faHeadset } from '@fortawesome/free-solid-svg-icons';
 import Users from './Users';            // Import the Users component
 import Categories from './Categories';  // Import the Categories component
 import Products from './Products';      // Import the Products component
@@ -7,6 +9,8 @@ import Permissions from './Permissions'; // Import the Permissions component
 import '../css/AdminPage.css';
 import AdminReports from './AdminReports';
 import ReportDetails from './ReportDetails';
+import AdminSupportPanel from './AdminSupportPanel'; // Import the Support Panel
+import Dashboard from './Dashboard'; // Import the Dashboard component
 
 const AdminPage = () => {
     const [view, setView] = useState('dashboard');
@@ -27,12 +31,41 @@ const AdminPage = () => {
             <div className="sidebar">
                 <h2>ProdoCo</h2>
                 <ul className="sidebar-menu">
-                    <li onClick={() => setView('dashboard')}><Link to="#">Dashboard</Link></li>
-                    <li onClick={() => setView('products')}><Link to="#">Products</Link></li>
-                    <li onClick={() => setView('users')}><Link to="#">Users</Link></li>
-                    <li onClick={() => setView('categories')}><Link to="#">Categories</Link></li>
-                    <li onClick={() => setView('permissions')}><Link to="#">Permissions</Link></li>
-                    <li onClick={() => setView('reports')}><Link to="#">Reports</Link></li>
+                    <li onClick={() => setView('dashboard')}>
+                        <Link to="#">
+                            <FontAwesomeIcon icon={faTachometerAlt} /> Dashboard
+                        </Link>
+                    </li>
+                    <li onClick={() => setView('products')}>
+                        <Link to="#">
+                            <FontAwesomeIcon icon={faBox} /> Products
+                        </Link>
+                    </li>
+                    <li onClick={() => setView('users')}>
+                        <Link to="#">
+                            <FontAwesomeIcon icon={faUsers} /> Users
+                        </Link>
+                    </li>
+                    <li onClick={() => setView('categories')}>
+                        <Link to="#">
+                            <FontAwesomeIcon icon={faTags} /> Categories
+                        </Link>
+                    </li>
+                    <li onClick={() => setView('permissions')}>
+                        <Link to="#">
+                            <FontAwesomeIcon icon={faKey} /> Permissions
+                        </Link>
+                    </li>
+                    <li onClick={() => setView('reports')}>
+                        <Link to="#">
+                            <FontAwesomeIcon icon={faFileAlt} /> Reports
+                        </Link>
+                    </li>
+                    <li onClick={() => setView('support')}>
+                        <Link to="#">
+                            <FontAwesomeIcon icon={faHeadset} /> Support
+                        </Link>
+                    </li>
                 </ul>
             </div>
 
@@ -43,19 +76,20 @@ const AdminPage = () => {
                 </div>
 
                 {/* Conditionally render the content based on the view */}
-                {view === 'dashboard' && <p>Welcome to the admin dashboard!</p>}
-                {view === 'products' && <Products users={users} />}
+                {view === 'dashboard' && <Dashboard />}
+                                {view === 'products' && <Products users={users} />}
                 {view === 'users' && <Users />}
                 {view === 'categories' && <Categories />}
                 {view === 'permissions' && (
                     <Permissions users={users} updateUserPermissions={updateUserPermissions} />
                 )}
                 {view === 'reports' && <AdminReports />}
+                {view === 'support' && <AdminSupportPanel />} {/* Render Support Panel */}
 
                 {/* Routes setup */}
                 <Routes>
-                <Route path="report/:id" element={<ReportDetails />} />       
-                         </Routes>
+                    <Route path="report/:id" element={<ReportDetails />} />
+                </Routes>
             </div>
         </div>
     );

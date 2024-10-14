@@ -1,9 +1,6 @@
-// src/components/Permissions.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../css/Permissions.css';
-
 
 const Permissions = () => {
     const [users, setUsers] = useState([]);
@@ -11,13 +8,17 @@ const Permissions = () => {
 
     useEffect(() => {
         const fetchUsers = async () => {
-            const token = localStorage.getItem('token');
-            const response = await axios.get('http://localhost:5000/admin/users', {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
-            setUsers(response.data);
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.get('http://localhost:5000/admin/users', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                setUsers(response.data);
+            } catch (error) {
+                setError('Failed to fetch users.');
+            }
         };
         fetchUsers();
     }, []);
@@ -31,7 +32,7 @@ const Permissions = () => {
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`,
+                        Authorization: `Bearer ${token}`,
                     },
                 }
             );
@@ -50,6 +51,7 @@ const Permissions = () => {
             );
         } catch (error) {
             console.error('Error updating permissions:', error);
+            setError('Failed to update permissions.');
         }
     };
 

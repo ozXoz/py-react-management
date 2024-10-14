@@ -1,19 +1,22 @@
-/* src/css/Users.css */
-
 /* General container styling */
 .users-container {
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 30px;
     font-family: 'Roboto', sans-serif;
     color: #333;
+    background-color: #f8f9fa; /* Soft light gray background */
+    border-radius: 12px; /* Slightly larger corner radius for a modern look */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15); /* Enhanced shadow for depth */
 }
 
 /* Headings */
 .users-container h2 {
     text-align: center;
     margin-bottom: 30px;
-    color: #2c3e50;
+    color: #2c3e50; /* Darker blue for heading */
+    font-size: 28px;
+    font-weight: 700; /* Bolder heading */
 }
 
 /* Success and error messages */
@@ -21,14 +24,20 @@
     color: #27ae60;
     text-align: center;
     margin-bottom: 20px;
-    font-size: 16px;
+    font-size: 18px;
+    background-color: #e9f7ef;
+    padding: 10px;
+    border-radius: 8px;
 }
 
 .error-message {
     color: #e74c3c;
     text-align: center;
     margin-bottom: 20px;
-    font-size: 16px;
+    font-size: 18px;
+    background-color: #fdecea;
+    padding: 10px;
+    border-radius: 8px;
 }
 
 /* Table styling */
@@ -36,17 +45,21 @@
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 40px;
+    background-color: #fff; /* Pure white background */
+    border-radius: 12px;
+    overflow: hidden; /* Ensure the table border-radius is respected */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12); /* Soft shadow for the table */
 }
 
 .user-table thead {
-    background-color: #2c3e50;
-    color: #190505;
+    background-color: #34495e; /* Darker blue-gray background */
+    color: #fff; /* White text for good contrast */
 }
 
 .user-table th,
 .user-table td {
-    padding: 15px;
-    border: 1px solid #ddd;
+    padding: 18px;
+    border-bottom: 1px solid #ddd;
     text-align: center;
     vertical-align: middle;
     font-size: 16px;
@@ -55,14 +68,27 @@
 .user-table th {
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    font-weight: 600;
 }
 
 .user-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #f3f3f3; /* Light gray for alternating rows */
 }
 
 .user-table tbody tr:hover {
-    background-color: #f1f1f1;
+    background-color: #dfe6e9; /* Light blue-gray hover effect */
+    cursor: pointer; /* Indicate row interactivity */
+}
+
+.user-table td {
+    color: #2c3e50; /* Dark text color for readability */
+    transition: background-color 0.3s ease; /* Smooth transition for hover */
+}
+
+.user-table th {
+    position: sticky; /* Sticky header for scrolling */
+    top: 0;
+    z-index: 2;
 }
 
 /* Responsive Design */
@@ -83,15 +109,17 @@
     .user-table tr {
         margin-bottom: 15px;
         border: 1px solid #ddd;
-        border-radius: 4px;
+        border-radius: 8px;
         padding: 10px;
         background-color: #fff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Soft shadow for mobile view */
     }
 
     .user-table td {
         text-align: right;
         padding-left: 50%;
         position: relative;
+        padding: 12px;
     }
 
     .user-table td::before {
@@ -102,10 +130,69 @@
         padding-right: 10px;
         text-align: left;
         font-weight: bold;
+        color: #34495e; /* Slightly lighter color for labels */
     }
 
     .user-table td img {
         max-width: 100%;
         border-radius: 4px;
+    }
+}
+
+/* Custom Hover Effects */
+.user-table th,
+.user-table td {
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover transitions */
+}
+
+.user-table tbody tr:hover td {
+    background-color: #dff9fb; /* Light teal background on hover */
+}
+
+/* Scrollbar Customization */
+.users-container {
+    scrollbar-width: thin;
+    scrollbar-color: #2980b9 #f2f2f2;
+}
+
+.users-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.users-container::-webkit-scrollbar-track {
+    background: #f2f2f2;
+}
+
+.users-container::-webkit-scrollbar-thumb {
+    background-color: #2980b9;
+    border-radius: 10px;
+    border: 3px solid #f2f2f2;
+}
+
+/* Improved Styling for Form Section */
+.users-container h2 {
+    border-bottom: 2px solid #2980b9; /* Underline for heading */
+    padding-bottom: 12px;
+    margin-bottom: 24px;
+}
+
+/* Additional Top Padding for Cleaner Look */
+.users-container {
+    padding-top: 50px; /* Extra padding on top */
+}
+
+/* Hover effect for table rows */
+.user-table tbody tr:hover {
+    background-color: #d1f2eb; /* Subtle hover color for rows */
+}
+
+/* Add responsive behavior for scrollbar on small screens */
+@media (max-width: 600px) {
+    .users-container {
+        overflow-x: auto;
+    }
+
+    .user-table {
+        min-width: 600px; /* Prevent table from shrinking too much on small screens */
     }
 }

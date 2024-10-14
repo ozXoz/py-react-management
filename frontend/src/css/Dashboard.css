@@ -1,0 +1,25 @@
+/* Dashboard Container */
+.dashboard-container {
+    padding: 20px;
+    background-color: #ecf0f1;
+}
+
+.dashboard-container h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #34495e;
+}
+
+.chart-container {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #34495e;
+}

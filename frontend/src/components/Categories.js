@@ -1,5 +1,3 @@
-// src/components/Categories.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../css/Categories.css'; // Import the CSS file

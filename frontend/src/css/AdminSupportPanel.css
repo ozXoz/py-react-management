@@ -1,0 +1,47 @@
+/* src/css/AdminSupportPanel.css */
+.admin-support-panel {
+    padding: 20px;
+}
+
+.admin-support-panel h2 {
+    margin-bottom: 20px;
+}
+
+.admin-support-panel ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.admin-support-panel ul li {
+    margin-bottom: 10px;
+}
+
+.chat-window {
+    margin-top: 20px;
+}
+
+.chat-messages {
+    height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.chat-message {
+    margin-bottom: 5px;
+}
+
+.chat-message.admin {
+    color: blue;
+}
+
+.chat-message.user {
+    color: green;
+}
+
+.chat-window input {
+    width: 80%;
+    padding: 10px;
+    margin-right: 10px;
+}

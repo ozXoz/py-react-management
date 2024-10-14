@@ -2,8 +2,9 @@ from flask import Flask
 from flask_pymongo import PyMongo
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
-
+from flask_socketio import SocketIO, emit, join_room, leave_room
 from flask_uploads import UploadSet, configure_uploads, IMAGES, UploadNotAllowed
+from flask_jwt_extended import get_jwt_identity
 
 
 
@@ -34,6 +35,8 @@ app.mongo = mongo
 # Initialize JWT for token authentication
 jwt = JWTManager(app)
 
+# Initialize SocketIO
+socketio = SocketIO(app, cors_allowed_origins="*")
 # Configure image uploading via Flask-Uploads
 images = UploadSet('images', IMAGES)
 configure_uploads(app, images)
@@ -53,6 +56,52 @@ app.register_blueprint(admin_bp)
 app.register_blueprint(products_bp)      # Register the products blueprint
 app.register_blueprint(user_products_bp)
 app.register_blueprint(reports_bp)  # Register the reports blueprint
-# Start the Flask application
+# Live chat support backend
+clients = {}
+
+@socketio.on('connect')
+def handle_connect():
+    emit('connected', {'data': 'Connected to the server'})
+
+@socketio.on('join')
+def handle_join(data):
+    room = data.get('room')
+    join_room(room)
+    emit('room_joined', {'message': f'Joined room {room}'}, room=room)
+
+@socketio.on('send_message')
+def handle_message(data):
+    room = data.get('room')
+    message = data.get('message')
+    emit('receive_message', {'message': message, 'sender': 'user'}, room=room)
+
+@socketio.on('admin_message')
+def handle_admin_message(data):
+    room = data.get('room')
+    message = data.get('message')
+    emit('receive_message', {'message': message, 'sender': 'admin'}, room=room)
+
+
+# User initiates chat
+@socketio.on('initiate_chat')
+def handle_initiate_chat(data):
+    user_id = get_jwt_identity()  # Assuming you are using JWT for authentication
+    issue = data.get('issue')
+    
+    # Notify admins about the incoming chat request
+    emit('support_request', {'user_id': user_id, 'issue': issue}, broadcast=True, room='admin')
+
+# Admin accepts chat
+@socketio.on('accept_chat')
+def handle_accept_chat(data):
+    user_id = data.get('user_id')
+    
+    # Notify user that the admin accepted the chat
+    emit('chat_accepted', {'admin_id': get_jwt_identity()}, room=user_id)
+    
+    # Join the room for real-time communication
+    join_room(user_id)    
+
+# Start the Flask application with SocketIO
 if __name__ == '__main__':
-    app.run(debug=True)
+    socketio.run(app, debug=True, host='0.0.0.0', port=3000)

@@ -1,7 +1,7 @@
-// src/components/Products.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faTrash, faEdit, faUpload, faTags } from '@fortawesome/free-solid-svg-icons';
 import '../css/Products.css';
 
 const Products = () => {
@@ -113,7 +113,6 @@ const Products = () => {
         }
     };
 
-    // Handle Edit Button Click
     const handleEditProduct = (product) => {
         setEditProduct({
             ...product,
@@ -224,26 +223,24 @@ const Products = () => {
     return (
         <div className="products-container">
             <h2>Manage Products</h2>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+            {error && <p className="error">{error}</p>}
+            {successMessage && <p className="success">{successMessage}</p>}
 
             {/* Add Product Form */}
-            <form onSubmit={handleAddProduct}>
-                <h3>Add New Product</h3>
+            <form onSubmit={handleAddProduct} className="product-form">
+                <h3>
+                    <FontAwesomeIcon icon={faPlus} /> Add New Product
+                </h3>
                 <input
                     type="text"
                     placeholder="Product Name"
                     value={newProduct.name}
-                    onChange={(e) =>
-                        setNewProduct({ ...newProduct, name: e.target.value })
-                    }
+                    onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
                     required
                 />
                 <select
                     value={newProduct.category}
-                    onChange={(e) =>
-                        setNewProduct({ ...newProduct, category: e.target.value })
-                    }
+                    onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
                     required
                 >
                     <option value="">Select Category</option>
@@ -255,32 +252,34 @@ const Products = () => {
                 </select>
 
                 {/* Dynamic Attributes for New Product */}
-                <div>
+                <div className="attributes-section">
                     <h4>Attributes</h4>
                     {Object.entries(newProduct.attributes).map(([key, value], index) => (
                         <p key={index}>
                             {key}: {value}
                         </p>
                     ))}
-                    <input
-                        type="text"
-                        placeholder="Attribute Name"
-                        value={newAttributeName}
-                        onChange={(e) => setNewAttributeName(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Attribute Value"
-                        value={newAttributeValue}
-                        onChange={(e) => setNewAttributeValue(e.target.value)}
-                    />
-                    <button type="button" onClick={handleNewAttributeAdd}>
-                        Add Attribute
-                    </button>
+                    <div className="attribute-input">
+                        <input
+                            type="text"
+                            placeholder="Attribute Name"
+                            value={newAttributeName}
+                            onChange={(e) => setNewAttributeName(e.target.value)}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Attribute Value"
+                            value={newAttributeValue}
+                            onChange={(e) => setNewAttributeValue(e.target.value)}
+                        />
+                        <button type="button" onClick={handleNewAttributeAdd}>
+                            <FontAwesomeIcon icon={faPlus} /> Add Attribute
+                        </button>
+                    </div>
                 </div>
 
                 {/* Image Upload */}
-                <div>
+                <div className="image-upload">
                     <h4>Product Image</h4>
                     <input
                         type="file"
@@ -296,111 +295,10 @@ const Products = () => {
                     />
                 </div>
 
-                <button type="submit">Add Product</button>
+                <button type="submit">
+                    <FontAwesomeIcon icon={faUpload} /> Add Product
+                </button>
             </form>
-
-            {/* Edit Product Modal */}
-            {editProduct && (
-                <div className="edit-product-modal">
-                    <h3>Edit Product</h3>
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="Product Name"
-                        value={editProduct.name}
-                        onChange={(e) =>
-                            setEditProduct({ ...editProduct, name: e.target.value })
-                        }
-                    />
-                    <select
-                        name="category"
-                        value={editProduct.category}
-                        onChange={(e) =>
-                            setEditProduct({ ...editProduct, category: e.target.value })
-                        }
-                    >
-                        <option value="">Select Category</option>
-                        {categories.map((cat, index) => (
-                            <option key={index} value={cat}>
-                                {cat}
-                            </option>
-                        ))}
-                    </select>
-
-                    {/* Edit Attributes */}
-                    <div>
-                        <h4>Attributes</h4>
-                        {Object.entries(editProduct.attributes || {}).map(
-                            ([key, value], index) => (
-                                <div key={index}>
-                                    <input type="text" value={key} readOnly />
-                                    <input
-                                        type="text"
-                                        value={value}
-                                        onChange={(e) =>
-                                            handleEditAttributeChange(key, e.target.value)
-                                        }
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => handleRemoveAttribute(key)}
-                                    >
-                                        Remove
-                                    </button>
-                                </div>
-                            )
-                        )}
-                        {/* Add new attribute */}
-                        <div>
-                            <input
-                                type="text"
-                                placeholder="Attribute Name"
-                                value={editAttributeName}
-                                onChange={(e) => setEditAttributeName(e.target.value)}
-                            />
-                            <input
-                                type="text"
-                                placeholder="Attribute Value"
-                                value={editAttributeValue}
-                                onChange={(e) => setEditAttributeValue(e.target.value)}
-                            />
-                            <button type="button" onClick={handleEditAttributeAdd}>
-                                Add Attribute
-                            </button>
-                        </div>
-                    </div>
-
-                    {/* Image Upload */}
-                    <div>
-                        <h4>Product Image</h4>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => setEditImageFile(e.target.files[0])}
-                        />
-                        <p>Or</p>
-                        <input
-                            type="text"
-                            placeholder="Image URL"
-                            value={editImageUrl}
-                            onChange={(e) => setEditImageUrl(e.target.value)}
-                        />
-                        {editProduct.image && (
-                            <div>
-                                <p>Current Image:</p>
-                                <img src={editProduct.image} alt="Product" width="100" />
-                            </div>
-                        )}
-                    </div>
-
-                    <button type="button" onClick={saveEditedProduct}>
-                        Save Changes
-                    </button>
-                    <button type="button" onClick={() => setEditProduct(null)}>
-                        Cancel
-                    </button>
-                </div>
-            )}
 
             {/* Product List */}
             <h3>Product List</h3>
@@ -420,31 +318,120 @@ const Products = () => {
                             <td>{product.name}</td>
                             <td>{product.category}</td>
                             <td>
-                                {Object.entries(product.attributes || {}).map(
-                                    ([key, value], index) => (
-                                        <p key={index}>
-                                            {key}: {value}
-                                        </p>
-                                    )
-                                )}
+                                {Object.entries(product.attributes || {}).map(([key, value], index) => (
+                                    <p key={index}>
+                                        {key}: {value}
+                                    </p>
+                                ))}
                             </td>
                             <td>
-                                {product.image && (
-                                    <img src={product.image} alt={product.name} width="100" />
-                                )}
+                                {product.image && <img src={product.image} alt={product.name} width="100" />}
                             </td>
                             <td>
-                                <button onClick={() => handleEditProduct(product)}>
-                                    Edit
+                                <button className="edit-button" onClick={() => handleEditProduct(product)}>
+                                    <FontAwesomeIcon icon={faEdit} /> Edit
                                 </button>
-                                <button onClick={() => handleDeleteProduct(product.id)}>
-                                    Delete
+                                <button className="delete-button" onClick={() => handleDeleteProduct(product.id)}>
+                                    <FontAwesomeIcon icon={faTrash} /> Delete
                                 </button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+
+            {/* Edit Product Modal */}
+            {editProduct && (
+                <div className="edit-product-modal">
+                    <div className="modal-content">
+                        <button className="close-button" onClick={() => setEditProduct(null)}>
+                            &times;
+                        </button>
+                        <h3>Edit Product</h3>
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Product Name"
+                            value={editProduct.name}
+                            onChange={(e) => setEditProduct({ ...editProduct, name: e.target.value })}
+                        />
+                        <select
+                            name="category"
+                            value={editProduct.category}
+                            onChange={(e) => setEditProduct({ ...editProduct, category: e.target.value })}
+                        >
+                            <option value="">Select Category</option>
+                            {categories.map((cat, index) => (
+                                <option key={index} value={cat}>
+                                    {cat}
+                                </option>
+                            ))}
+                        </select>
+
+                        {/* Edit Attributes */}
+                        <div className="attributes-section">
+                            <h4>Attributes</h4>
+                            {Object.entries(editProduct.attributes || {}).map(([key, value], index) => (
+                                <div key={index} className="attribute-item">
+                                    <input type="text" value={key} readOnly />
+                                    <input
+                                        type="text"
+                                        value={value}
+                                        onChange={(e) => handleEditAttributeChange(key, e.target.value)}
+                                    />
+                                    <button type="button" onClick={() => handleRemoveAttribute(key)}>
+                                        <FontAwesomeIcon icon={faTrash} /> Remove
+                                    </button>
+                                </div>
+                            ))}
+                            {/* Add new attribute */}
+                            <div className="attribute-input">
+                                <input
+                                    type="text"
+                                    placeholder="Attribute Name"
+                                    value={editAttributeName}
+                                    onChange={(e) => setEditAttributeName(e.target.value)}
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Attribute Value"
+                                    value={editAttributeValue}
+                                    onChange={(e) => setEditAttributeValue(e.target.value)}
+                                />
+                                <button type="button" onClick={handleEditAttributeAdd}>
+                                    <FontAwesomeIcon icon={faPlus} /> Add Attribute
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Image Upload */}
+                        <div className="image-upload">
+                            <h4>Product Image</h4>
+                            <input type="file" accept="image/*" onChange={(e) => setEditImageFile(e.target.files[0])} />
+                            <p>Or</p>
+                            <input
+                                type="text"
+                                placeholder="Image URL"
+                                value={editImageUrl}
+                                onChange={(e) => setEditImageUrl(e.target.value)}
+                            />
+                            {editProduct.image && (
+                                <div>
+                                    <p>Current Image:</p>
+                                    <img src={editProduct.image} alt="Product" width="100" />
+                                </div>
+                            )}
+                        </div>
+
+                        <button className="save-button" onClick={saveEditedProduct}>
+                            Save Changes
+                        </button>
+                        <button className="cancel-button" onClick={() => setEditProduct(null)}>
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

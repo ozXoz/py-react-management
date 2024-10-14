@@ -8,89 +8,55 @@
 
 /* Sidebar */
 .sidebar {
-    width: 150px;
+    width: 220px;
     background-color: #2c3e50; /* Darker shade for sidebar */
     color: #ecf0f1; /* Light text for contrast */
-    padding: 30px 20px; /* Adjusted padding for a cleaner layout */
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3); /* Deeper shadow for depth */
-    position: fixed; /* Fixed sidebar */
-    height: 100%; /* Full height */
+    padding: 30px 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    height: 100%;
     overflow-y: auto; /* Scroll if content overflows */
+    transition: width 0.3s ease-in-out; /* Smooth transition for sidebar */
 }
 
 /* Sidebar Title */
 .sidebar h2 {
-    font-size: 26px;
+    font-size: 28px;
     font-weight: bold;
     color: #ecf0f1;
-    text-align: center; /* Center the title */
-    margin-bottom: 20px; /* Space below the title */
+    text-align: center;
+    margin-bottom: 30px;
 }
 
 /* Sidebar Menu */
 .sidebar-menu {
     list-style-type: none;
     padding: 0;
-    margin: 0; /* Remove default margin */
+    margin: 0;
 }
 
 .sidebar-menu li {
-    margin: 15px 0;
+    margin: 20px 0;
 }
 
 .sidebar-menu li a {
-    color: #ecf0f1; /* Lighter color for links */
-    text-decoration: none;
-    padding: 10px 15px; /* Add padding for links */
-    border-radius: 4px; /* Rounded corners */
-    display: flex; /* Use flexbox for alignment */
-    align-items: center; /* Center items vertically */
-    transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
-}
-
-/* Sidebar Menu Item Hover Effect */
-.sidebar-menu li a:hover {
-    background-color: #3498db; /* Highlight background on hover */
-    color: white; /* Change text color on hover */
-}
-
-/* Sidebar Icons */
-.sidebar-menu li a i {
-    margin-right: 10px; /* Space between icon and text */
-}
-
-/* Categories Section */
-.categories-section {
-    margin-top: 30px; /* Space between menu and categories */
-}
-
-.categories-section h3 {
-    font-size: 20px;
-    font-weight: bold;
     color: #ecf0f1;
-    border-bottom: 1px solid #3498db; /* Underline for category header */
-    padding-bottom: 10px; /* Spacing below the header */
-}
-
-.categories-list {
-    list-style-type: none;
-    padding: 0;
-}
-
-.categories-list li {
-    margin: 10px 0;
-}
-
-.categories-list li a {
-    color: #ecf0f1; 
     text-decoration: none;
-    padding: 5px; /* Add padding for links */
-    border-radius: 4px; /* Round edges */
-    transition: background-color 0.3s; /* Smooth background change */
+    padding: 10px 20px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.categories-list li a:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Light background on hover */
+.sidebar-menu li a:hover {
+    background-color: #3498db;
+    color: white;
+}
+
+.sidebar-menu li a i {
+    margin-right: 15px;
+    font-size: 18px;
 }
 
 /* Main Content */
@@ -98,8 +64,9 @@
     flex-grow: 1;
     padding: 20px;
     margin-left: 250px; /* Adjust for fixed sidebar */
-    background-color: #ecf0f1; /* Light background for main content */
-    overflow-y: auto; /* Scroll if content overflows */
+    background-color: #ecf0f1;
+    overflow-y: auto;
+    transition: margin-left 0.3s ease-in-out; /* Smooth transition for content */
 }
 
 /* Header */
@@ -111,8 +78,8 @@
 }
 
 .header h1 {
-    font-size: 28px;
-    color: #34495e; /* Darker color for header */
+    font-size: 30px;
+    color: #34495e;
 }
 
 .header-actions {
@@ -125,12 +92,12 @@
     border-radius: 8px;
     border: 1px solid #ccc;
     margin-right: 10px;
-    width: 300px; /* Set a width for search input */
-    transition: border-color 0.3s; /* Smooth border change */
+    width: 300px;
+    transition: border-color 0.3s;
 }
 
 .header-actions input:focus {
-    border-color: #3498db; /* Change border color on focus */
+    border-color: #3498db;
 }
 
 /* Add New Button */
@@ -141,38 +108,38 @@
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s; /* Smooth transition */
+    transition: background-color 0.3s;
 }
 
 .header-actions .add-new:hover {
-    background-color: #2980b9; /* Darker blue on hover */
+    background-color: #2980b9;
 }
 
 /* Products Grid */
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
 }
 
 .product-card {
     background-color: white;
     border-radius: 8px;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); /* Softer shadow for cards */
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
     padding: 15px;
     text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s; /* Smooth transformations */
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .product-card:hover {
-    transform: translateY(-5px); /* Lift effect on hover */
-    box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 30px rgba(0, 0, 0, 0.2);
 }
 
 .product-image img {
     width: 100%;
     height: auto;
-    border-radius: 5px; /* Round image corners */
+    border-radius: 5px;
 }
 
 .product-details {
@@ -182,12 +149,12 @@
 .product-details h3 {
     margin-bottom: 10px;
     font-size: 18px;
-    color: #34495e; /* Darker color for product title */
+    color: #34495e;
 }
 
 .product-details p {
     margin-bottom: 5px;
-    color: #7f8c8d; /* Lighter color for product details */
+    color: #7f8c8d;
 }
 
 .update-button {
@@ -197,44 +164,9 @@
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s; /* Smooth transition */
+    transition: background-color 0.3s;
 }
 
 .update-button:hover {
-    background-color: #27ae60; /* Darker green on hover */
-}
-
-
-/* src/css/AdminPage.css */
-
-.users-container {
-    margin-top: 20px;
-}
-
-.user-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.user-table th, .user-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-
-.user-table th {
-    background-color: #f2f2f2;
-    text-align: left;
-}
-
-
-
-/* src/css/AdminPage.css */
-
-.unread-count {
-    background-color: red;
-    color: white;
-    padding: 2px 6px;
-    border-radius: 12px;
-    margin-left: 5px;
-    font-size: 12px;
+    background-color: #27ae60;
 }
