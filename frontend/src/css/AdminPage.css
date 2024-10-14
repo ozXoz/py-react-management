@@ -63,7 +63,7 @@
 .main-content {
     flex-grow: 1;
     padding: 20px;
-    margin-left: 250px; /* Adjust for fixed sidebar */
+    margin-left: 220px; /* Adjusted to fit with the sidebar */
     background-color: #ecf0f1;
     overflow-y: auto;
     transition: margin-left 0.3s ease-in-out; /* Smooth transition for content */
@@ -72,10 +72,11 @@
 /* Header */
 .header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* Reduced bottom margin for a smaller header */
+    margin-left: 10px; /* Keeps the header closer to the left side */
 }
+
 
 .header h1 {
     font-size: 30px;
@@ -85,6 +86,7 @@
 .header-actions {
     display: flex;
     align-items: center;
+    margin-left: auto; /* Ensures the buttons are placed at the far-right of the header */
 }
 
 .header-actions input {

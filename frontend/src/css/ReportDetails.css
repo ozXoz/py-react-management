@@ -1,5 +1,3 @@
-/* src/css/ReportDetails.css */
-
 /* Container Styling */
 .report-details {
     background-color: #fff;
@@ -11,10 +9,44 @@
     color: #333;
 }
 
-/* Paragraph Styling */
-.report-details p {
-    margin: 10px 0;
+/* Section Styling */
+.report-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Icon Styling */
+.icon {
+    color: #2980b9;
+    font-size: 24px;
+    margin-right: 15px;
+}
+
+/* Info Styling */
+.report-info h4 {
+    margin-bottom: 5px;
+    color: #34495e;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.report-info p {
     font-size: 16px;
+    color: #7f8c8d;
+    margin: 0;
+}
+
+/* Loading Message Styling */
+.loading-message {
+    text-align: center;
+    color: #2980b9;
+    font-size: 18px;
+    margin-top: 20px;
 }
 
 /* Strong Text Styling */
@@ -25,13 +57,6 @@
 /* Error and Loading Messages */
 .error-message {
     color: #e74c3c;
-    text-align: center;
-    font-size: 18px;
-    margin-top: 20px;
-}
-
-.loading-message {
-    color: #2980b9;
     text-align: center;
     font-size: 18px;
     margin-top: 20px;

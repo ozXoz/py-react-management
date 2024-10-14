@@ -1,10 +1,10 @@
-// src/components/ReportDetails.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faEnvelope, faExclamationCircle, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import '../css/ReportDetails.css'; // Import the CSS file
 
-
-const ReportDetails = ({ reportId }) => {  // Accept reportId as a prop
+const ReportDetails = ({ reportId }) => {
     const [report, setReport] = useState(null);
 
     useEffect(() => {
@@ -28,17 +28,50 @@ const ReportDetails = ({ reportId }) => {  // Accept reportId as a prop
     }, [reportId]);
 
     if (!report) {
-        return <p>Loading report details...</p>;
+        return <p className="loading-message">Loading report details...</p>;
     }
 
     return (
         <div className="report-details">
-            <p><strong>User Email:</strong> {report.user_email}</p>
-            <p><strong>Subject:</strong> {report.subject}</p>
-            <p><strong>Message:</strong> {report.message}</p>
-            <p><strong>Status:</strong> {report.status}</p>
-            <p><strong>Submitted On:</strong> {new Date(report.created_at).toLocaleString()}</p>
-            {/* Add more details as needed */}
+            <div className="report-section">
+                <FontAwesomeIcon icon={faUser} className="icon" />
+                <div className="report-info">
+                    <h4>User Email</h4>
+                    <p>{report.user_email}</p>
+                </div>
+            </div>
+
+            <div className="report-section">
+                <FontAwesomeIcon icon={faExclamationCircle} className="icon" />
+                <div className="report-info">
+                    <h4>Subject</h4>
+                    <p>{report.subject}</p>
+                </div>
+            </div>
+
+            <div className="report-section">
+                <FontAwesomeIcon icon={faEnvelope} className="icon" />
+                <div className="report-info">
+                    <h4>Message</h4>
+                    <p>{report.message}</p>
+                </div>
+            </div>
+
+            <div className="report-section">
+                <FontAwesomeIcon icon={faCalendarAlt} className="icon" />
+                <div className="report-info">
+                    <h4>Submitted On</h4>
+                    <p>{new Date(report.created_at).toLocaleString()}</p>
+                </div>
+            </div>
+
+            <div className="report-section">
+                <FontAwesomeIcon icon={faExclamationCircle} className="icon" />
+                <div className="report-info">
+                    <h4>Status</h4>
+                    <p>{report.status}</p>
+                </div>
+            </div>
         </div>
     );
 };

@@ -1,5 +1,3 @@
-// src/components/AdminReports.js
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ReportDetails from './ReportDetails';  // Import the ReportDetails component
@@ -27,6 +25,10 @@ const AdminReports = () => {
         };
         fetchReports();
     }, []);
+
+    const handleCloseDrawer = () => {
+        setSelectedReportId(null);
+    };
 
     return (
         <div className="admin-reports">
@@ -66,19 +68,21 @@ const AdminReports = () => {
                         </tbody>
                     </table>
 
-                    {/* Conditionally render the report details below the table */}
-                    {selectedReportId && (
-                        <div className="report-details-section">
-                            <h3>Report Details</h3>
-                            <ReportDetails reportId={selectedReportId} />
-                            <button
-                                className="close-details-button"
-                                onClick={() => setSelectedReportId(null)}
-                            >
-                                Close
-                            </button>
-                        </div>
-                    )}
+                    {/* Sliding Drawer for Report Details */}
+                    <div className={`drawer ${selectedReportId ? 'open' : ''}`}>
+                        {selectedReportId && (
+                            <div className="drawer-content">
+                                <h3>Report Details</h3>
+                                <ReportDetails reportId={selectedReportId} />
+                                <button
+                                    className="close-drawer-button"
+                                    onClick={handleCloseDrawer}
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        )}
+                    </div>
                 </>
             )}
         </div>
