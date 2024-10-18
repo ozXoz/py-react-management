@@ -19,7 +19,6 @@ const Orders = () => {
     console.log('Received Orders:', receivedOrders);
   }, [orders, receivedOrders]);
   
-
   const fetchOrders = async () => {
     try {
       const response = await fetch('http://localhost:5000/admin/orders', {
@@ -30,15 +29,14 @@ const Orders = () => {
       });
       const data = await response.json();
   
-      console.log('Fetched orders:', data);
-      console.log('Order statuses:', data.map(order => order.status));
-  
-      setOrders(data.filter(order => (order.status || 'pending') === 'pending'));
+      // Separate pending and received orders
+      setOrders(data.filter(order => order.status === 'pending'));
       setReceivedOrders(data.filter(order => order.status === 'received'));
     } catch (error) {
       console.error('Error fetching orders:', error);
     }
   };
+  
   
   const fetchProducts = async () => {
     try {
@@ -89,7 +87,7 @@ const Orders = () => {
   const handleReceiveOrder = async (orderId) => {
     const confirmReceive = window.confirm("Are you sure you want to mark this order as received?");
     if (!confirmReceive) return;
-
+  
     try {
       const response = await fetch(`http://localhost:5000/admin/orders/receive/${orderId}`, {
         method: 'POST',
@@ -97,11 +95,22 @@ const Orders = () => {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
       });
-
+  
       const data = await response.json();
       if (response.ok) {
         alert(data.message);
-        fetchOrders();  // Refresh orders after receiving the order
+  
+        // Move the order from "orders" to "receivedOrders" immediately
+        const receivedOrder = orders.find(order => order.id === orderId);
+        if (receivedOrder) {
+          // Update status locally before fetch
+          receivedOrder.status = 'received';
+  
+          // Update state - remove from orders and add to receivedOrders
+          setOrders(prevOrders => prevOrders.filter(order => order.id !== orderId));
+          setReceivedOrders(prevReceivedOrders => [...prevReceivedOrders, receivedOrder]);
+        }
+        
       } else {
         alert(data.message);
       }
@@ -109,6 +118,10 @@ const Orders = () => {
       console.error('Error receiving order:', error);
     }
   };
+  
+  
+  
+  
 
   return (
     <div className="orders-section">
