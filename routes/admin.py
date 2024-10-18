@@ -18,6 +18,11 @@ def is_valid_objectid(id_str):
         return True
     except:
         return False
+    
+
+
+
+    
 
 # Route to fetch all users (admin only)
 @admin_bp.route('/admin/users', methods=['GET'])
@@ -252,4 +257,65 @@ def get_all_products():
 
     except Exception as e:
         logging.error(f"Error fetching all products: {e}")
+        return jsonify({'message': f"Server error: {str(e)}"}), 500
+
+
+
+    try:
+        current_user = get_jwt_identity()
+        if current_user['role'] != 'admin':
+            return jsonify({'message': 'Access forbidden'}), 403
+
+        mongo = current_app.mongo
+        products_cursor = mongo.db.products.find()
+        products = []
+        for product in products_cursor:
+            products.append({
+                'id': str(product['_id']),
+                'name': product['name'],
+                'category': product['category'],
+                'attributes': product.get('attributes', {}),
+                'description': product.get('description', ''),
+                'quantity': product.get('quantity', 0),  # Include quantity
+                'min_quantity': product.get('min_quantity', 0),  # Include min_quantity
+                'added_by': product.get('added_by'),
+                'created_at': product.get('created_at'),
+                'updated_at': product.get('updated_at')
+            })
+
+        return jsonify(products), 200
+
+    except Exception as e:
+        logging.error(f"Error fetching all products: {e}")
+        return jsonify({'message': f"Server error: {str(e)}"}), 500
+
+# Route to update the minimum quantity for a product (admin only)
+@admin_bp.route('/admin/products/<product_id>/min_quantity', methods=['PUT'])
+@jwt_required()
+def update_min_quantity(product_id):
+    try:
+        current_user = get_jwt_identity()
+
+        if current_user['role'] != 'admin':
+            return jsonify({'message': 'Access forbidden'}), 403
+
+        data = request.get_json()
+        new_min_quantity = data.get('min_quantity')
+
+        if new_min_quantity is None or new_min_quantity < 0:
+            return jsonify({'message': 'Invalid minimum quantity'}), 400
+
+        mongo = current_app.mongo
+        result = mongo.db.products.update_one(
+            {'_id': ObjectId(product_id)},
+            {'$set': {'min_quantity': new_min_quantity}}
+        )
+
+        if result.matched_count == 0:
+            return jsonify({'message': 'Product not found'}), 404
+
+        return jsonify({'message': 'Minimum quantity updated successfully'}), 200
+
+    except Exception as e:
+        logging.error(f"Error updating minimum quantity: {e}")
         return jsonify({'message': f"Server error: {str(e)}"}), 500

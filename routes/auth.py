@@ -14,7 +14,7 @@ auth_bp = Blueprint('auth', __name__)
 
 # Registration Route
 @auth_bp.route('/register', methods=['POST'])
-@cross_origin(origin='http://localhost:3000')  # Allow CORS for your frontend
+@cross_origin(origin='http://localhost:3000', headers=['Content-Type', 'Authorization'])  # Allow CORS for your frontend
 def register():
     data = request.get_json()
 
@@ -55,6 +55,7 @@ def register():
         return jsonify({'message': f'Error registering user: {str(e)}'}), 500
 
 @auth_bp.route('/login', methods=['POST', 'OPTIONS'])
+@cross_origin(origin='http://localhost:3000', headers=['Content-Type', 'Authorization'])
 def login():
     if request.method == 'OPTIONS':
         return jsonify({'message': 'Preflight request successful'}), 200  # Return OK for preflight requests

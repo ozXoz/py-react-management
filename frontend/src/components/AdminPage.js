@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';  // Import Routes and Route
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTachometerAlt, faBox, faUsers, faTags, faKey, faFileAlt, faHeadset } from '@fortawesome/free-solid-svg-icons';
+import { faTachometerAlt, faBox, faUsers, faTags, faKey, faFileAlt, faHeadset,faClipboardList,faWarehouse } from '@fortawesome/free-solid-svg-icons';
 import Users from './Users';            // Import the Users component
 import Categories from './Categories';  // Import the Categories component
 import Products from './Products';      // Import the Products component
@@ -11,6 +11,8 @@ import AdminReports from './AdminReports';
 import ReportDetails from './ReportDetails';
 import AdminSupportPanel from './AdminSupportPanel'; // Import the Support Panel
 import Dashboard from './Dashboard'; // Import the Dashboard component
+import Orders from './Orders';  // Import Orders component
+import InventoryCheck from './InventoryCheck'; // Import InventoryCheck component
 
 const AdminPage = () => {
     const [view, setView] = useState('dashboard');
@@ -66,6 +68,16 @@ const AdminPage = () => {
                             <FontAwesomeIcon icon={faHeadset} /> Support
                         </Link>
                     </li>
+                    <li onClick={() => setView('orders')}>
+                        <Link to="#">
+                            <FontAwesomeIcon icon={faClipboardList} /> Orders
+                        </Link>
+                    </li>
+                    <li onClick={() => setView('inventory')}>
+                        <Link to="#">
+                            <FontAwesomeIcon icon={faWarehouse} /> Inventory Check
+                        </Link>
+                    </li>
                 </ul>
             </div>
 
@@ -90,6 +102,8 @@ const AdminPage = () => {
                 <Routes>
                     <Route path="report/:id" element={<ReportDetails />} />
                 </Routes>
+                {view === 'orders' && <Orders />} {/* Render Orders section */}
+                {view === 'inventory' && <InventoryCheck />} {/* Render Inventory Check section */}
             </div>
         </div>
     );

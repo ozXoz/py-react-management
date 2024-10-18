@@ -1,5 +1,3 @@
-# routes/products.py
-
 from flask import Blueprint, jsonify, request, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_cors import CORS
@@ -17,11 +15,7 @@ logging.basicConfig(level=logging.DEBUG)
 products_bp = Blueprint('products', __name__)
 
 # Apply CORS to the products blueprint
-CORS(
-    products_bp,
-    resources={r"/*": {"origins": "http://localhost:3000"}},
-    supports_credentials=True
-)
+CORS(products_bp, resources={r"/*": {"origins": "http://localhost:5000"}}, supports_credentials=True)
 
 # Helper function to validate ObjectId
 def is_valid_objectid(id_str):

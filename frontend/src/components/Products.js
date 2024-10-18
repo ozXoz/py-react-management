@@ -1,7 +1,9 @@
+// src/components/Products.js
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faTrash, faEdit, faUpload, faTags } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTrash, faEdit, faUpload } from '@fortawesome/free-solid-svg-icons';
 import '../css/Products.css';
 
 const Products = () => {
@@ -57,20 +59,20 @@ const Products = () => {
         e.preventDefault();
         setError('');
         setSuccessMessage('');
-
+    
         try {
             const token = localStorage.getItem('token');
             const formData = new FormData();
             formData.append('name', newProduct.name);
             formData.append('category', newProduct.category);
             formData.append('attributes', JSON.stringify(newProduct.attributes));
-
+    
             if (newImageFile) {
                 formData.append('image_file', newImageFile);
             } else if (newImageUrl) {
                 formData.append('image_url', newImageUrl);
             }
-
+    
             const response = await axios.post(
                 'http://localhost:5000/admin/products',
                 formData,
@@ -81,7 +83,7 @@ const Products = () => {
                     },
                 }
             );
-
+    
             setSuccessMessage(response.data.message);
             setNewProduct({ name: '', category: '', attributes: {} });
             setNewAttributeName('');
@@ -307,6 +309,7 @@ const Products = () => {
                     <tr>
                         <th>Name</th>
                         <th>Category</th>
+                        <th>Quantity</th> {/* Add Quantity Column */}
                         <th>Attributes</th>
                         <th>Image</th>
                         <th>Actions</th>
@@ -317,12 +320,15 @@ const Products = () => {
                         <tr key={product.id}>
                             <td>{product.name}</td>
                             <td>{product.category}</td>
+                            <td>{product.attributes.quantity || 'N/A'}</td> {/* Access quantity from attributes */}
                             <td>
-                                {Object.entries(product.attributes || {}).map(([key, value], index) => (
-                                    <p key={index}>
-                                        {key}: {value}
-                                    </p>
-                                ))}
+                                {Object.entries(product.attributes || {})
+                                    .filter(([key]) => key !== 'quantity') // Exclude 'quantity' from attributes
+                                    .map(([key, value], index) => (
+                                        <p key={index}>
+                                            {key}: {value}
+                                        </p>
+                                    ))}
                             </td>
                             <td>
                                 {product.image && <img src={product.image} alt={product.name} width="100" />}
@@ -371,19 +377,21 @@ const Products = () => {
                         {/* Edit Attributes */}
                         <div className="attributes-section">
                             <h4>Attributes</h4>
-                            {Object.entries(editProduct.attributes || {}).map(([key, value], index) => (
-                                <div key={index} className="attribute-item">
-                                    <input type="text" value={key} readOnly />
-                                    <input
-                                        type="text"
-                                        value={value}
-                                        onChange={(e) => handleEditAttributeChange(key, e.target.value)}
-                                    />
-                                    <button type="button" onClick={() => handleRemoveAttribute(key)}>
-                                        <FontAwesomeIcon icon={faTrash} /> Remove
-                                    </button>
-                                </div>
-                            ))}
+                            {Object.entries(editProduct.attributes || {})
+                                .filter(([key]) => key !== 'quantity') // Exclude 'quantity' from attributes
+                                .map(([key, value], index) => (
+                                    <div key={index} className="attribute-item">
+                                        <input type="text" value={key} readOnly />
+                                        <input
+                                            type="text"
+                                            value={value}
+                                            onChange={(e) => handleEditAttributeChange(key, e.target.value)}
+                                        />
+                                        <button type="button" onClick={() => handleRemoveAttribute(key)}>
+                                            <FontAwesomeIcon icon={faTrash} /> Remove
+                                        </button>
+                                    </div>
+                                ))}
                             {/* Add new attribute */}
                             <div className="attribute-input">
                                 <input
