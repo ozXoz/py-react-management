@@ -6,6 +6,10 @@ import '../css/UserPage.css'; // Import the CSS file for styling
 import ReportForm from './ReportForm';
 import UserReports from './UserReports';
 import LiveChatUser from './LiveChatUser'; // Uncomment this when implementing LiveChat
+import Inbox from './Inbox';  // Import Inbox component for the user
+import SendMessage from './SendMessage'; // Import SendMessage component
+
+
 
 const UserPage = () => {
     const [view, setView] = useState('dashboard');
@@ -323,6 +327,8 @@ const UserPage = () => {
                     <li onClick={() => setView('reportForm')}>Report Issue</li>
                     <li onClick={() => setView('userReports')}>Your Reports</li>
                     <li onClick={() => setView('support')}>Support</li> {/* New Support Menu Item */}
+                    <li onClick={() => setView('messages')}>Messages</li> {/* Add Messages panel */}
+
                 </ul>
             </div>
 
@@ -360,6 +366,12 @@ const UserPage = () => {
                     <div className="support-section">
                         <h2>Support</h2>
                         <LiveChatUser /> {/* LiveChatUser component renders the chat area */}
+                    </div>
+                )}
+                {view === 'messages' && (
+                    <div>
+                        <Inbox /> {/* User's inbox */}
+                        <SendMessage /> {/* User can send messages */}
                     </div>
                 )}
             </div>

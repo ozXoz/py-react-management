@@ -53,6 +53,8 @@ from routes.products import products_bp  # Import the products blueprint
 from routes.reports import reports_bp  # Import the reports blueprint
 from routes.orders import orders_bp
 from routes.inventory import inventory_bp
+from routes.chat_messages import messages_bp
+from routes.user_chat import user_chat_bp
 app.register_blueprint(auth_bp)
 app.register_blueprint(admin_bp)
 app.register_blueprint(products_bp)      # Register the products blueprint
@@ -60,6 +62,9 @@ app.register_blueprint(user_products_bp)
 app.register_blueprint(reports_bp)  # Register the reports blueprint
 app.register_blueprint(orders_bp)        # Register the orders blueprint
 app.register_blueprint(inventory_bp)     # Register the inventory blueprint
+app.register_blueprint(messages_bp, url_prefix='/messages')
+app.register_blueprint(user_chat_bp, url_prefix='/users')
+
 
 # Live chat support backend
 # clients = {}

@@ -10,6 +10,8 @@ import './css/App.css'; // Import the global CSS
 import Users from './components/Users';  // Import the Users component
 import Categories from './components/Categories';  // Import the Categories component
 import ReportDetails from './components/ReportDetails';  // Import ReportDetails component
+import SendMessage from './components/SendMessage';
+import Inbox from './components/Inbox';
 
 
 
@@ -25,6 +27,8 @@ const App = () => {
                 <Route path="/admin/users" element={<Users />} />  {/* Add a route for Users component */}
                 <Route path="/categories" element={<Categories />} />  {/* Categories Route */}
                 <Route path="/admin/report/:id" element={<ReportDetails />} />
+                <Route path="/send" element={<SendMessage />} />
+                <Route path="/inbox" element={<Inbox />} />
 
 
                 {/* Add more routes as needed */}

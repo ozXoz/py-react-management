@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';  // Import Routes and Route
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTachometerAlt, faBox, faUsers, faTags, faKey, faFileAlt, faHeadset,faClipboardList,faWarehouse } from '@fortawesome/free-solid-svg-icons';
+import { faTachometerAlt, faBox, faUsers, faTags, faKey, faFileAlt, faHeadset,faClipboardList,faWarehouse,faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import Users from './Users';            // Import the Users component
 import Categories from './Categories';  // Import the Categories component
 import Products from './Products';      // Import the Products component
@@ -13,6 +13,8 @@ import AdminSupportPanel from './AdminSupportPanel'; // Import the Support Panel
 import Dashboard from './Dashboard'; // Import the Dashboard component
 import Orders from './Orders';  // Import Orders component
 import InventoryCheck from './InventoryCheck'; // Import InventoryCheck component
+import Inbox from './Inbox';  // Import Inbox component
+import SendMessage from './SendMessage'; // Import SendMessage component
 
 const AdminPage = () => {
     const [view, setView] = useState('dashboard');
@@ -78,6 +80,9 @@ const AdminPage = () => {
                             <FontAwesomeIcon icon={faWarehouse} /> Inventory Check
                         </Link>
                     </li>
+                    <li onClick={() => setView('messages')}>
+                        <Link to="#"><FontAwesomeIcon icon={faEnvelope} /> Messages</Link>
+                    </li>
                 </ul>
             </div>
 
@@ -104,6 +109,12 @@ const AdminPage = () => {
                 </Routes>
                 {view === 'orders' && <Orders />} {/* Render Orders section */}
                 {view === 'inventory' && <InventoryCheck />} {/* Render Inventory Check section */}
+                {view === 'messages' && (
+                    <div>
+                        <Inbox /> {/* Admin's inbox */}
+                        <SendMessage /> {/* Admin can send messages */}
+                    </div>
+                )}
             </div>
         </div>
     );
